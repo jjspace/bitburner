@@ -9,6 +9,7 @@ let Settings = {
     SuppressFactionInvites: false,
     AutosaveInterval:       60,
     ThemeHighlightColor:    "#ffffff",
+    ThemeHighlightColor2:    "#ff0000",
     ThemeFontColor:         "#66ff33",
     ThemeBackgroundColor:   "#000000",
 }
@@ -91,9 +92,11 @@ function setSettingsLabels() {
         return;
     }
     if (/^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(Settings.ThemeHighlightColor) &&
+        /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(Settings.ThemeHighlightColor2) &&
         /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(Settings.ThemeFontColor) &&
         /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(Settings.ThemeBackgroundColor)) {
         document.body.style.setProperty('--my-highlight-color', Settings.ThemeHighlightColor);
+        document.body.style.setProperty('--my-highlight-color-2', Settings.ThemeHighlightColor2);
         document.body.style.setProperty('--my-font-color', Settings.ThemeFontColor);
         document.body.style.setProperty('--my-background-color', Settings.ThemeBackgroundColor);
     }

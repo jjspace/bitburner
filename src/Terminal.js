@@ -31,7 +31,7 @@ import {TextFile, getTextFile,
 
 import {containsAllStrings, longestCommonStart,
         formatNumber, isString}             from "../utils/StringHelperFunctions.js";
-import {addOffset, printArray}              from "../utils/HelperFunctions.js";
+import {addOffset, printArray, colorizeText}              from "../utils/HelperFunctions.js";
 import {logBoxCreate}                       from "../utils/LogBox.js";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
@@ -40,7 +40,7 @@ import {yesNoBoxCreate,
 /* Write text to terminal */
 //If replace is true then spaces are replaced with "&nbsp;"
 function post(input) {
-    $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre-wrap;">' + input + '</td></tr>');
+    $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre-wrap;">' + colorizeText(input) + '</td></tr>');
 	updateTerminalScroll();
 }
 
@@ -77,7 +77,7 @@ $(document).keydown(function(event) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
-                post("[" + Player.getCurrentServer().hostname + " ~]> " + command);
+                post("{c1}[" + Player.getCurrentServer().hostname + " ~]>{/c1} " + command);
 
                 Terminal.resetTerminalInput();      //Clear input first
 				Terminal.executeCommand(command);
@@ -427,7 +427,8 @@ let Terminal = {
 
     resetTerminalInput: function() {
         document.getElementById("terminal-input-td").innerHTML =
-            "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+            "<div id='terminal-input-header'>" + 
+            colorizeText("{c1}[" + Player.getCurrentServer().hostname + " ~]${/c1}") + " </div>" +
             '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         var hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";
@@ -1269,13 +1270,18 @@ let Terminal = {
                     var inputBackgroundHex = args[0];
                     var inputTextHex = args[1];
                     var inputHighlightHex = args[2];
+                    var inputHighlightHex2 = inputHighlightHex;
+                    if (args.length > 3) inputHighlightHex2 = args[3]; // maybe a better way to check for this?
                     if (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputBackgroundHex) &&
                        /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputTextHex) &&
-                       /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputHighlightHex)){
+                       /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputHighlightHex) &&
+                       /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputHighlightHex2)){
                         document.body.style.setProperty('--my-highlight-color',inputHighlightHex);
+                        document.body.style.setProperty('--my-highlight-color-2',inputHighlightHex2);
                         document.body.style.setProperty('--my-font-color',inputTextHex);
                         document.body.style.setProperty('--my-background-color',inputBackgroundHex);
                         Settings.ThemeHighlightColor = document.body.style.getPropertyValue("--my-highlight-color");
+                        Settings.ThemeHighlightColor2 = document.body.style.getPropertyValue("--my-highlight-color-2");
                         Settings.ThemeFontColor = document.body.style.getPropertyValue("--my-font-color");
                         Settings.ThemeBackgroundColor = document.body.style.getPropertyValue("--my-background-color");
                     } else {

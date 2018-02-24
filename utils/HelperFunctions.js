@@ -200,7 +200,20 @@ function powerOfTwo(n) {
     return n && (n & (n-1)) === 0;
 }
 
+// strings will have tag blocks replaced to style them
+// eg {1}replace me{/1} gets replaced with <span class="hl-1">replace me</span>, just add span.hl-1 as a rule in css
+// just add in the documentation for print() and tprint() what can be used
+// so far included are 
+//   {c1}text{/c1} uses my-highlight-color
+//   {c2}text{/c2} uses my-highlight-color-2
+// TODO can add any number of diff styles, maybe {u} for underline and {b} for bold or something.
+// TODO this could also help easily make new logging calls for warn() and error() or danger() be styled a specific way
+function colorizeText(str) {
+    return str.replace(/\{c1\}(.*?)\{\/c1\}/g, '<span class="hl-1">$1</span>')
+              .replace(/\{c2\}(.*?)\{\/c2\}/g, '<span class="hl-2">$1</span>');
+}
+
 export {sizeOfObject, addOffset, clearEventListeners, getRandomInt,
         compareArrays, printArray, powerOfTwo, clearEventListenersEl,
         removeElementById, removeElement, createElement, createAccordionElement,
-        removeChildrenFromElement, createPopup, clearSelector};
+        removeChildrenFromElement, createPopup, clearSelector, colorizeText};

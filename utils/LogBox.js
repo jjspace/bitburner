@@ -1,5 +1,5 @@
 import {killWorkerScript}                   from "../src/NetscriptWorker.js";
-import {printArray, clearEventListeners}    from "./HelperFunctions.js";
+import {printArray, clearEventListeners, colorizeText}    from "./HelperFunctions.js";
 
 $(document).keydown(function(event) {
     if (logBoxOpened && event.keyCode == 27) {
@@ -57,7 +57,7 @@ function logBoxUpdateText() {
     if (logBoxCurrentScript && logBoxOpened && txt && logBoxCurrentScript.logUpd) {
         txt.innerHTML = "";
         for (var i = 0; i < logBoxCurrentScript.logs.length; ++i) {
-            txt.innerHTML += logBoxCurrentScript.logs[i];
+            txt.innerHTML += colorizeText(logBoxCurrentScript.logs[i]);
             txt.innerHTML += "<br>";
         }
         logBoxCurrentScript.logUpd = false;

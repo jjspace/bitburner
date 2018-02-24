@@ -2,6 +2,7 @@
     --my-font-color: #66ff33;
     --my-background-color: #000000;
     --my-highlight-color: #ffffff;
+    --my-highlight-color-2: #ff0000;
 }
 
 * {
@@ -36,6 +37,17 @@ li {
 span {
     margin: 4px;
     padding: 4px;
+}
+
+span[class^='hl-'] {
+    margin: 0;
+    padding: 0;
+}
+span.hl-1 {
+    color: var(--my-highlight-color);
+}
+span.hl-2 {
+    color: var(--my-highlight-color-2);
 }
 
 #entire-game-container {
