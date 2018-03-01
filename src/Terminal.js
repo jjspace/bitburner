@@ -1270,27 +1270,31 @@ let Terminal = {
             case "theme":
                 //todo support theme saving
                 var args = commandArray[1] ? commandArray[1].split(" ") : [];
-                if (args.length != 1 && args.length != 3) {
+                if (args.length != 1 && args.length != 3 && args.length != 4) {
                     post("Incorrect number of arguments.");
-                    post("Usage: theme [default|muted|solarized] | #[background color hex] #[text color hex] #[highlight color hex]");
+                    post("Usage: theme [default|muted|solarized] | #[background color hex] #[text color hex] #[highlight color hex] #[highlight color 2 hex](optional)");
                 } else if(args.length == 1){
                     var themeName = args[0];
                     if (themeName == "default"){
                         document.body.style.setProperty('--my-highlight-color',"#ffffff");
+                        document.body.style.setProperty('--my-highlight-color-2',"#ff0000");
                         document.body.style.setProperty('--my-font-color',"#66ff33");
                         document.body.style.setProperty('--my-background-color',"#000000");
                     } else if (themeName == "muted"){
                         document.body.style.setProperty('--my-highlight-color',"#ffffff");
+                        document.body.style.setProperty('--my-highlight-color-2',"#ffffff");
                         document.body.style.setProperty('--my-font-color',"#66ff33");
                         document.body.style.setProperty('--my-background-color',"#252527");
                     } else if (themeName == "solarized"){
                         document.body.style.setProperty('--my-highlight-color',"#6c71c4");
+                        document.body.style.setProperty('--my-highlight-color-2',"#6c71c4");
                         document.body.style.setProperty('--my-font-color',"#839496");
                         document.body.style.setProperty('--my-background-color',"#002b36");
                     } else {
                         return post("Theme not found");
                     }
                     Settings.ThemeHighlightColor = document.body.style.getPropertyValue("--my-highlight-color");
+                    Settings.ThemeHighlightColor2 = document.body.style.getPropertyValue("--my-highlight-color-2");
                     Settings.ThemeFontColor = document.body.style.getPropertyValue("--my-font-color");
                     Settings.ThemeBackgroundColor = document.body.style.getPropertyValue("--my-background-color");
                 } else {
